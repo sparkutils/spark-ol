@@ -1,0 +1,3 @@
+[submodule "OpenLineage"]
+	path = OpenLineage
+	url = git@github.com:OpenLineage/OpenLineage.git
