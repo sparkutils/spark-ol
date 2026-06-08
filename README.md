@@ -5,4 +5,4 @@ OL Spark is packaged against Scala version only, which has led to a number of ru
 
 Any additionaly dependency issues relating to Databricks are also handled.
 
-This project is limited to packaging only not to new functionality.
+This project is limited to packaging only, not to new functionality, and comes in two flavours - normal dependency and shaded.
