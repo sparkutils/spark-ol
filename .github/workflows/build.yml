@@ -51,8 +51,8 @@ jobs:
     with:
       theMatrix: |
         {
-          "profile": [ "scala_2.13.18,Spark4", "scala_2.13.18,Spark41" ],
-          "scala": [ "dummy" ]
+          "profile": [ "Spark4", "Spark41" ],
+          "scala": [ "scala_2.13.18" ]
         }
       jdk: 21
       mvnCliOpts: *MAVEN_CLI_OPTS
