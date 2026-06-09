@@ -619,6 +619,9 @@
                         <exclude>io/openlineage/spark/agent/lifecycle/plan/OptimizedCreateHiveTableAsSelectCommandVisitor.java</exclude>
                         <exclude>io/openlineage/spark32/agent/lifecycle/plan/AlterTableCommandDatasetBuilder.java</exclude>
                         <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>
+                        <exclude>io/openlineage/spark/agent/lifecycle/plan/KinesisMicroBatchStreamStrategy.java</exclude>
+                        <exclude>io/openlineage/spark/agent/lifecycle/Spark32VisitorFactoryImpl.java</exclude>
+
                         <!-- iceberg only, specific iceberg version only for lower spark versions than 4 -->
                         <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
                         <exclude>io/openlineage/spark34/agent/lifecycle/plan/column/MergeIntoIceberg13ColumnLineageVisitor.java</exclude>
@@ -630,6 +633,13 @@
                         <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>
                         <exclude>io/openlineage/spark/agent/lifecycle/plan/MongoMicroBatchStreamStrategy.java</exclude>
                     </excludes>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
 
