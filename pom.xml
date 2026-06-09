@@ -20,6 +20,9 @@
         <developer>
             <name>Chris Twiner</name>
         </developer>
+        <developer>
+            <name>Eugene Korniichuk</name>
+        </developer>
     </developers>
     <scm>
         <connection>scm:git:git://github.com/sparkutils/spark-ol.git</connection>
@@ -270,7 +273,7 @@
     </profiles>
 
     <properties>
-        <revision>0.1.0-baseline</revision>
+        <revision>0.0.1-smoketest</revision>
 
         <mavenFlattenPluginVersion>1.2.7</mavenFlattenPluginVersion>
         <mavenProjectInfoReportsPluginVersion>3.4.5</mavenProjectInfoReportsPluginVersion>
