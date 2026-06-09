@@ -732,18 +732,21 @@
                             <scalaCompatVersion>${scalaCompatVersion}</scalaCompatVersion>
                         </configuration>
                     </execution>
-<!--                    <execution>-->
-<!--                        <id>attach-javadocs</id>-->
-<!--                        <goals>-->
-<!--                            <goal>doc-jar</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                    <execution>-->
-<!--                        <id>attach-sources</id>-->
-<!--                        <goals>-->
-<!--                            <goal>add-source</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>doc-jar</goal>
+                        </goals>
+                        <configuration>
+                            <failOnError>false</failOnError>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                    </execution>
                     <!-- <execution>
                         <id>scala-compile-first</id>
                         <phase>process-resources</phase>
