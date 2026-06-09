@@ -319,16 +319,17 @@
 
         <openLineageVersion>1.48.0</openLineageVersion>
         <lombok.version>1.18.46</lombok.version>
-        <hadoopVersion>3.4.2</hadoopVersion> <!-- spark41 -->
-        <hiveVersion>4.2.0</hiveVersion> <!--  -->
+
+        <!-- spark41 versions -->
+        <hadoopVersion>3.4.2</hadoopVersion>
+        <hiveVersion>4.2.0</hiveVersion>
         <slf4jVersion>2.0.18</slf4jVersion>
         <micrometerVersion>1.16.5</micrometerVersion>
         <awsVersion>2.46.5</awsVersion>
-        <gcSparkVersion>0.44.2</gcSparkVersion>
+        <gcSparkVersion>0.42.2</gcSparkVersion>
         <icebergVersion>1.11.0</icebergVersion>
         <icebergCompatVersion>4.0</icebergCompatVersion>
         <httpComponentVersion>5.4.2</httpComponentVersion>
-
     </properties>
 <!--
     <repositories>
@@ -566,9 +567,15 @@
             <groupId>org.apache.httpcomponents.core5</groupId>
             <artifactId>httpcore5</artifactId>
             <version>${httpComponentVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>${httpComponentVersion}</version>
+        </dependency>
+
+
 
         <dependency>
             <groupId>io.openlineage</groupId>
@@ -604,6 +611,25 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
+                    <excludes>
+                        <!-- not compliant with Spark4 at all, needs a large rewrite -->
+                        <exclude>io/openlineage/spark3/agent/lifecycle/plan/CreateReplaceDatasetBuilder.java</exclude>
+                        <exclude>io/openlineage/spark31/agent/lifecycle/plan/AlterTableDatasetBuilder.java</exclude>
+                        <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteToMicroBatchDataSourceV1DatasetBuilder.java</exclude>
+                        <exclude>io/openlineage/spark/agent/lifecycle/plan/OptimizedCreateHiveTableAsSelectCommandVisitor.java</exclude>
+                        <exclude>io/openlineage/spark32/agent/lifecycle/plan/AlterTableCommandDatasetBuilder.java</exclude>
+                        <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>
+                        <!-- iceberg only, specific iceberg version only for lower spark versions than 4 -->
+                        <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
+                        <exclude>io/openlineage/spark34/agent/lifecycle/plan/column/MergeIntoIceberg13ColumnLineageVisitor.java</exclude>
+                        <exclude>io/openlineage/spark33/agent/lifecycle/plan/ReplaceIcebergDataDatasetBuilder.java</exclude>
+                        <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteIcebergDeltaDatasetBuilder.java</exclude>
+                        <!-- delta THIS SHOULD BE DONE -->
+                        <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
+
+                        <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>
+                        <exclude>io/openlineage/spark/agent/lifecycle/plan/MongoMicroBatchStreamStrategy.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
 
@@ -635,6 +661,7 @@
                                 <source>${project.basedir}/OpenLineage/integration/spark/spark33/src/main/java</source>
                                 <source>${project.basedir}/OpenLineage/integration/spark/spark34/src/main/java</source>
                                 <source>${project.basedir}/OpenLineage/integration/spark/spark35/src/main/java</source>
+                                <source>${project.basedir}/OpenLineage/integration/spark/vendor/gcp/src/main/java</source>
                             </sources>
                         </configuration>
                     </execution>
