@@ -1,0 +1,60 @@
+# Full build setup off main, with ~docsOnly commit filter to run just mvn_site then docs.
+name: Default CI
+
+on:
+  push:
+    branches: [ "main", "temp/*" ]
+  pull_request:
+    branches: [ "main", "temp/*" ]
+
+env:
+  MAVEN_CLI_OPTS: &MAVEN_CLI_OPTS "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+  # -Dmaven.repo.local=.m2/repository not needed on github, seems ~/.m2 is supported / expected
+  MAVEN_OPTS_21: &MAVEN_OPTS_21 "-ea -XX:+IgnoreUnrecognizedVMOptions -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.http.retryHandler.class=standard -Dmaven.wagon.http.retryHandler.count=3 -Dhttps.protocols=TLSv1.2 -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.invoke=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.util.concurrent=ALL-UNNAMED --add-opens java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.base/sun.nio.cs=ALL-UNNAMED --add-opens java.base/sun.security.action=ALL-UNNAMED --add-opens java.base/sun.util.calendar=ALL-UNNAMED"
+
+jobs:
+
+  # all versions that cannot be built with tests - typically Databricks only
+  noTestBuilds_21:
+    uses: sparkutils/building/.github/workflows/run_build.yml@main
+    with:
+      testString: -DskipTests # use tests for verifying only the delta tests have issues testString: test
+      theMatrix: |
+        {
+          "profile": [ "scala_2.13.18", "Spark4", "Spark41" ],
+          "scala": [ "dummy" ]
+        }
+      jdk: 21
+      mvnCliOpts: *MAVEN_CLI_OPTS
+      mvnOpts: *MAVEN_OPTS_21
+    secrets: inherit
+
+  # only publish snapshots on main by default, or when ~cut-release is in the commits
+  publish_21:
+    needs: [ noTestBuilds_21 ]
+    uses: sparkutils/building/.github/workflows/publish_build.yml@main
+    with:
+      theMatrix: |
+        {
+          "profile": [ "scala_2.13.18,Spark4", "scala_2.13.18,Spark41" ],
+          "scala": [ "dummy" ]
+        }
+      jdk: 21
+      mvnCliOpts: *MAVEN_CLI_OPTS
+      mvnOpts: *MAVEN_OPTS_21
+    secrets: inherit
+
+  # all versions that can be built with tests - typically oss only.  Fail fast so we can see all compilation or test errors at once
+  publishBuilds_21:
+    needs: [ noTestBuilds_21 ]
+    uses: sparkutils/building/.github/workflows/publish_build.yml@main
+    with:
+      theMatrix: |
+        {
+          "profile": [ "scala_2.13.18,Spark4", "scala_2.13.18,Spark41" ],
+          "scala": [ "dummy" ]
+        }
+      jdk: 21
+      mvnCliOpts: *MAVEN_CLI_OPTS
+      mvnOpts: *MAVEN_OPTS_21
+    secrets: inherit
