@@ -21,7 +21,7 @@ jobs:
       testString: -DskipTests # use tests for verifying only the delta tests have issues testString: test
       theMatrix: |
         {
-          "profile": [ "scala_2.13.18", "Spark4", "Spark41" ],
+          "profile": [ "scala_2.13.18,Spark4", "scala_2.13.18,Spark41" ],
           "scala": [ "dummy" ]
         }
       jdk: 21
