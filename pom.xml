@@ -782,11 +782,12 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
-                        <configuration>
-                            <failOnError>false</failOnError>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludePackageNames>io.openlineage.*.agent.lifecycle.plan.*:io.openlineage.*.agent.facets.builder.*</excludePackageNames>
+                    <failOnError>false</failOnError>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
