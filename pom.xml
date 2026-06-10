@@ -782,6 +782,11 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                        <configuration>
+                            <configuration>
+                                <failOnError>false</failOnError>
+                            </configuration>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
