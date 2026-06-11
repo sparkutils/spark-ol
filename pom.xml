@@ -273,7 +273,7 @@
     </profiles>
 
     <properties>
-        <revision>0.0.3-smoketest</revision>
+        <revision>0.0.4-smoketest</revision>
 
         <mavenFlattenPluginVersion>1.2.7</mavenFlattenPluginVersion>
         <mavenProjectInfoReportsPluginVersion>3.4.5</mavenProjectInfoReportsPluginVersion>
