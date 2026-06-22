@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>  <!-- rebuild -->
 
     <groupId>com.sparkutils</groupId>
-    <artifactId>spark-ol_${dbrCompatVersion}${sparkCompatVersion}_${scalaCompatVersion}</artifactId>
-
-    <packaging>jar</packaging>
+    <artifactId>spark-ol_root_${dbrCompatVersion}${sparkCompatVersion}_${scalaCompatVersion}</artifactId>
     <version>${revision}</version>
-    <name>Spark OpenLineage</name>
+    <packaging>pom</packaging>
+
+    <name>Spark OpenLineage Root</name>
     <description>A sparkutils packaging of OpenLineage Spark listeners</description>
     <url>https://sparkutils.github.io/spark-ol/</url>
+
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -29,6 +31,7 @@
         <developerConnection>scm:git:ssh://github.com:sparkutils/spark-ol.git</developerConnection>
         <url>http://github.com/sparkutils/spark-ol/tree/master</url>
     </scm>
+
     <profiles>
         <profile>
             <id>scala_2.12.18</id> <!-- 4 was built against this, seemingly dropped since Sep 23 -->
@@ -63,6 +66,11 @@
         </profile>
         <profile>
             <id>Spark350</id>
+
+            <modules>
+                <module>api</module>
+            </modules>
+
             <properties>
                 <shimRuntime>3.5.0.oss</shimRuntime>
                 <shimCompilationRuntime>3.5.0.oss</shimCompilationRuntime>
@@ -70,7 +78,8 @@
                 <sparkVersion>3.5.0</sparkVersion>
                 <sparkCompatVersion>3.5</sparkCompatVersion>
                 <profileDir>3.5.0</profileDir>
-                <jacksonVersion>2.15.2</jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
+                <jacksonVersion>2.15.2
+                </jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
                 <guavaVersion>15.0</guavaVersion> <!-- databricks runtime version -->
                 <parserCombinatorVersion>1.1.2</parserCombinatorVersion> <!-- databricks runtime version -->
                 <elidebelow>2</elidebelow>
@@ -85,11 +94,16 @@
                 <framelessOrg>com.sparkutils</framelessOrg>
 
                 <openLineageVersionSource>spark35</openLineageVersionSource>
+                <icebergCompatVersion>3.5</icebergCompatVersion>
                 <!--<scalatestVersion>3.2.15</scalatestVersion>  databricks runtime version -->
             </properties>
         </profile>
         <profile>
             <id>Spark4</id>
+            <modules>
+                <module>api</module>
+                <module>core</module>
+            </modules>
             <properties>
                 <shimRuntime>4.0.0.oss</shimRuntime>
                 <shimCompilationRuntime>4.0.0.oss</shimCompilationRuntime>
@@ -97,12 +111,13 @@
                 <sparkVersion>4.0.0</sparkVersion>
                 <sparkCompatVersion>4.0</sparkCompatVersion>
                 <profileDir>4.0.0</profileDir>
-                <jacksonVersion>2.15.2</jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
+                <jacksonVersion>2.15.2
+                </jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
                 <guavaVersion>15.0</guavaVersion> <!-- databricks runtime version -->
                 <parserCombinatorVersion>1.1.2</parserCombinatorVersion> <!-- databricks runtime version -->
                 <elidebelow>2</elidebelow>
                 <refinedVersion>0.9.28</refinedVersion>
-                <deltaCoreVersion>3.0.0</deltaCoreVersion>
+                <deltaCoreVersion>4.3.0</deltaCoreVersion>
                 <deltaArtifact>spark</deltaArtifact>
                 <snakeVersion>2.0</snakeVersion>
 
@@ -115,11 +130,16 @@
                 <encodingDir>agnosticEncoding</encodingDir>
 
                 <openLineageVersionSource>spark40</openLineageVersionSource>
+                <icebergCompatVersion>4.0</icebergCompatVersion>
                 <!--<scalatestVersion>3.2.15</scalatestVersion>  databricks runtime version -->
             </properties>
         </profile>
         <profile>
             <id>Spark41</id>
+            <modules>
+                <module>api</module>
+                <module>core</module>
+            </modules>
             <properties>
                 <shimRuntime>4.1.0.oss</shimRuntime>
                 <shimCompilationRuntime>4.1.0.oss</shimCompilationRuntime>
@@ -128,12 +148,13 @@
                 <sparkVersion>4.1.2</sparkVersion>
                 <sparkCompatVersion>4.1</sparkCompatVersion>
                 <profileDir>4.1.0</profileDir>
-                <jacksonVersion>2.15.2</jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
+                <jacksonVersion>2.15.2
+                </jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
                 <guavaVersion>15.0</guavaVersion> <!-- databricks runtime version -->
                 <parserCombinatorVersion>1.1.2</parserCombinatorVersion> <!-- databricks runtime version -->
                 <elidebelow>2</elidebelow>
                 <refinedVersion>0.9.28</refinedVersion>
-                <deltaCoreVersion>3.0.0</deltaCoreVersion>
+                <deltaCoreVersion>4.3.0</deltaCoreVersion>
                 <deltaArtifact>spark</deltaArtifact>
                 <snakeVersion>2.0</snakeVersion>
 
@@ -146,6 +167,7 @@
                 <scoverage.plugin.version>2.1.3</scoverage.plugin.version>
 
                 <openLineageVersionSource>spark40</openLineageVersionSource>
+                <icebergCompatVersion>4.0</icebergCompatVersion>
                 <!--<scalatestVersion>3.2.15</scalatestVersion>  databricks runtime version -->
             </properties>
         </profile>
@@ -158,7 +180,8 @@
                 <sparkVersion>3.5.0</sparkVersion>
                 <sparkCompatVersion>3.5</sparkCompatVersion>
                 <profileDir>14.3.dbr</profileDir>
-                <jacksonVersion>2.14.2</jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
+                <jacksonVersion>2.14.2
+                </jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
                 <guavaVersion>15.0</guavaVersion> <!-- databricks runtime version -->
                 <parserCombinatorVersion>1.1.2</parserCombinatorVersion> <!-- databricks runtime version -->
                 <elidebelow>2</elidebelow>
@@ -181,7 +204,8 @@
                 <sparkVersion>3.5.0</sparkVersion>
                 <sparkCompatVersion>3.5</sparkCompatVersion>
                 <profileDir>15.4.dbr</profileDir>
-                <jacksonVersion>2.14.2</jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
+                <jacksonVersion>2.14.2
+                </jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
                 <guavaVersion>15.0</guavaVersion> <!-- databricks runtime version -->
                 <parserCombinatorVersion>1.1.2</parserCombinatorVersion> <!-- databricks runtime version -->
                 <elidebelow>2</elidebelow>
@@ -204,7 +228,8 @@
                 <sparkVersion>3.5.0</sparkVersion>
                 <sparkCompatVersion>3.5</sparkCompatVersion>
                 <profileDir>16.4.dbr</profileDir>
-                <jacksonVersion>2.14.2</jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
+                <jacksonVersion>2.14.2
+                </jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
                 <guavaVersion>15.0</guavaVersion> <!-- databricks runtime version -->
                 <parserCombinatorVersion>1.1.2</parserCombinatorVersion> <!-- databricks runtime version -->
                 <elidebelow>2</elidebelow>
@@ -233,7 +258,8 @@
                 <sparkVersion>4.0.0</sparkVersion>
                 <sparkCompatVersion>4.0</sparkCompatVersion>
                 <profileDir>17.3.dbr</profileDir>
-                <jacksonVersion>2.14.2</jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
+                <jacksonVersion>2.14.2
+                </jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
                 <guavaVersion>33.4.0-jre</guavaVersion><!-- databricks runtime version -->
                 <parserCombinatorVersion>1.1.2</parserCombinatorVersion> <!-- databricks runtime version -->
                 <elidebelow>2</elidebelow>
@@ -259,7 +285,8 @@
                 <sparkVersion>4.1.0</sparkVersion>
                 <sparkCompatVersion>4.1</sparkCompatVersion>
                 <profileDir>18.3.dbr</profileDir>
-                <jacksonVersion>2.14.2</jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
+                <jacksonVersion>2.14.2
+                </jacksonVersion> <!-- scalameter dependency is 2.9.10 so perf tests runs need to change it -->
                 <guavaVersion>33.4.0-jre</guavaVersion><!-- databricks runtime version -->
                 <parserCombinatorVersion>1.1.2</parserCombinatorVersion> <!-- databricks runtime version -->
                 <elidebelow>2</elidebelow>
@@ -273,7 +300,7 @@
     </profiles>
 
     <properties>
-        <revision>0.0.4-smoketest</revision>
+        <revision>0.0.5-RC16</revision>
 
         <mavenFlattenPluginVersion>1.2.7</mavenFlattenPluginVersion>
         <mavenProjectInfoReportsPluginVersion>3.4.5</mavenProjectInfoReportsPluginVersion>
@@ -331,17 +358,23 @@
         <awsVersion>2.46.5</awsVersion>
         <gcSparkVersion>0.42.2</gcSparkVersion>
         <icebergVersion>1.11.0</icebergVersion>
-        <icebergCompatVersion>4.0</icebergCompatVersion>
         <httpComponentVersion>5.4.2</httpComponentVersion>
+        <javaLangVersion>11</javaLangVersion>
     </properties>
-<!--
+
     <repositories>
         <repository>
-            <id>mvn_snapshots</id>
+            <id>central_snaps</id>
             <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
         </repository>
     </repositories>
--->
+
     <distributionManagement>
         <repository>
             <id>central</id>
@@ -355,617 +388,239 @@
         </snapshotRepository>
     </distributionManagement>
 
-    <dependencies>
-        <!--
-        <dependency>
-            <groupId>com.globalmentor</groupId>
-            <artifactId>hadoop-bare-naked-local-fs</artifactId>
-            <version>${naked-local-fs-version}</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.hadoop</groupId>
-                    <artifactId>hadoop-commons</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.sparkutils</groupId>
-            <artifactId>shim_compilation_${shimCompilationRuntime}_${sparkCompatVersion}_${scalaCompatVersion}</artifactId>
-            <version>${shimCompilationVersion}</version>
-            <scope>provided</scope>
-            <classifier>sources</classifier>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.spark</groupId>
-                    <artifactId>spark-sql_${scalaCompatVersion}</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.sparkutils</groupId>
-            <artifactId>shim_runtime_${shimRuntime}_${sparkCompatVersion}_${scalaCompatVersion}</artifactId>
-            <version>${shimRuntimeVersion}</version>
-        </dependency>
-        -->
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>${scalaVersion}</version>
-            <scope>provided</scope>
-        </dependency>
-        <!--
-        <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_${scalaCompatVersion}</artifactId>
-            <version>${scalatestVersion}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junitVersion}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-compiler</artifactId>
-            <version>${scalaVersion}</version>
-            <scope>test</scope>
-        </dependency>
--->
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-sql_${scalaCompatVersion}</artifactId>
-            <version>${sparkVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-hive_${scalaCompatVersion}</artifactId>
-            <version>${sparkVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-streaming_${scalaCompatVersion}</artifactId>
-            <version>${sparkVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-sql-kafka-0-10_${scalaCompatVersion}</artifactId>
-            <version>${sparkVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.hive</groupId>
-            <artifactId>hive-common</artifactId>
-            <version>${hiveVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4jVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-scala_${scalaCompatVersion}</artifactId>
-            <version>${jacksonVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jacksonVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jacksonVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jacksonVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-core</artifactId>
-            <version>${micrometerVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>aws-core</artifactId>
-            <version>${awsVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>url-connection-client</artifactId>
-            <version>${awsVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>sts</artifactId>
-            <version>${awsVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-
-        <!-- Source: https://mvnrepository.com/artifact/com.google.cloud.spark/spark-bigquery -->
-        <dependency>
-            <groupId>com.google.cloud.spark</groupId>
-            <artifactId>spark-bigquery_${scalaCompatVersion}</artifactId>
-            <version>${gcSparkVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>io.delta</groupId>
-            <artifactId>delta-${deltaArtifact}_${scalaCompatVersion}</artifactId>
-            <version>${deltaCoreVersion}</version>
-            <scope>provided</scope> <!-- must be provided as there is no provided test, triggers antlr version issues -->
-            <exclusions>
-                <!-- let hive drive the version used, allows Spark 4 tests to run -->
-                <exclusion>
-                    <groupId>org.antlr</groupId>
-                    <artifactId>antlr4-runtime</artifactId>
-                </exclusion>
-            </exclusions>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.iceberg</groupId>
-            <artifactId>iceberg-spark</artifactId>
-            <version>${icebergVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.iceberg</groupId>
-            <artifactId>iceberg-core</artifactId>
-            <version>${icebergVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.iceberg</groupId>
-            <artifactId>iceberg-spark-runtime-${icebergCompatVersion}_${scalaCompatVersion}</artifactId>
-            <version>${icebergVersion}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.httpcomponents.core5</groupId>
-            <artifactId>httpcore5</artifactId>
-            <version>${httpComponentVersion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.httpcomponents.client5</groupId>
-            <artifactId>httpclient5</artifactId>
-            <version>${httpComponentVersion}</version>
-        </dependency>
-
-
-
-        <dependency>
-            <groupId>io.openlineage</groupId>
-            <artifactId>openlineage-java</artifactId>
-            <version>${openLineageVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.openlineage</groupId>
-            <artifactId>openlineage-sql-java</artifactId> <!-- OpenLineage/integration/sql/iface-java/src/main/java/io/openlineage/sql/ExtractionError.java -->
-            <version>${openLineageVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
-
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.9.1</version>
+                </plugin>
 
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-                <filtering>true</filtering>
-            </testResource>
-        </testResources>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${dependencyPluginVersion}</version>
+                    <executions> <!-- maven scala plugin uses a set to store classpath, it doesn't follow maven's so we need to use the source -->
+                        <execution>
+                            <id>unpack</id>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>unpack</goal>
+                            </goals>
+                            <configuration>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>com.sparkutils</groupId>
+                                        <artifactId>
+                                            shim_compilation_${shimCompilationRuntime}_${sparkCompatVersion}_${scalaCompatVersion}
+                                        </artifactId>
+                                        <version>${shimCompilationVersion}</version>
+
+                                        <classifier>sources</classifier>
+                                        <type>jar</type>
+
+                                        <overWrite>true</overWrite>
+                                        <outputDirectory>
+                                            ${project.build.directory}/shim_compilation_${shimCompilationRuntime}_${sparkCompatVersion}_${scalaCompatVersion}
+                                        </outputDirectory>
+                                    </artifactItem>
+                                </artifactItems>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${mavenSitePluginVersion}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${surefirePluginVersion}</version>
+                    <configuration>
+                        <forkCount>1</forkCount>
+                        <reuseForks>false</reuseForks>
+                        <argLine>-Xmx4g -ea -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED
+                            --add-opens=java.base/java.lang.invoke=ALL-UNNAMED
+                            --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+                            --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED
+                            --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED
+                            --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+                            --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED
+                            --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED
+                            --add-opens=java.base/sun.security.action=ALL-UNNAMED
+                            --add-opens=java.base/sun.util.calendar=ALL-UNNAMED
+                        </argLine>
+                        <systemPropertyVariables>
+                            <org.xerial.snappy.tempdir>${java.io.tmpdir}/teamcity/megdp/extrajars
+                            </org.xerial.snappy.tempdir>
+                            <buildDirectory>${project.build.directory}</buildDirectory>
+                        </systemPropertyVariables>
+                        <skipTests>true</skipTests>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>${mavenProjectInfoReportsPluginVersion}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.scoverage</groupId>
+                    <artifactId>scoverage-maven-plugin</artifactId>
+                    <version>${scoverage.plugin.version}</version>
+                    <configuration>
+                        <scalaVersion>${scalaVersion}</scalaVersion>
+                        <!-- compat layer is tested via the normal code,
+                             only pre-resolution plans are anywhere near test worthy -->
+                        <excludedPackages>org.apache.spark.sql</excludedPackages>
+                        <aggregate>true</aggregate>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${mavenJarPluginVersion}</version>
+                    <configuration>
+                        <archive>
+                            <manifestEntries>
+                                <Build-Time>${maven.build.timestamp}</Build-Time>
+                            </manifestEntries>
+                            <manifestSections>
+                                <manifestSection>
+                                    <name>Versions</name>
+                                    <manifestEntries>
+                                        <Project-Version>${project.version}</Project-Version>
+                                        <Project-Git-Hash>${GITHUB_SHA}</Project-Git-Hash>
+                                        <Project-CI-Branch>${GITHUB_BASE_REF}</Project-CI-Branch>
+                                        <Project-CI-Run-ID>${GITHUB_RUN_ID}</Project-CI-Run-ID>
+                                        <Project-URL>${GITHUB_REPOSITORY}</Project-URL>
+                                    </manifestEntries>
+                                </manifestSection>
+                            </manifestSections>
+                        </archive>
+                        <includes>
+                            <include>com/sparkutils/**</include>
+                            <include>io/openlineage/**</include>
+                        </includes>
+                        <excludes>
+                            <!-- shouldn't be there, really bad for multi-module projects -->
+                            <exclude>log4j2.xml</exclude>
+                        </excludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>test-jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <version>${mavenFlattenPluginVersion}</version>
+                    <configuration>
+                        <flattenMode>oss</flattenMode>
+                        <updatePomFile>true</updatePomFile>
+                    </configuration>
+                    <executions>
+                        <!-- enable flattening -->
+                        <execution>
+                            <id>flatten</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>flatten</goal>
+                            </goals>
+                        </execution>
+                        <!-- ensure proper cleanup -->
+                        <execution>
+                            <id>flatten.clean</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                            <configuration>
+                                <!-- Prevent gpg from using pinentry programs -->
+                                <gpgArguments>
+                                    <arg>--pinentry-mode</arg>
+                                    <arg>loopback</arg>
+                                </gpgArguments>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.2.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.central</groupId>
+                    <artifactId>central-publishing-maven-plugin</artifactId>
+                    <version>0.7.0</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <publishingServerId>central</publishingServerId>
+                        <autoPublish>true</autoPublish>
+                        <waitUntil>published</waitUntil>
+                        <ignorePublishedComponents>true</ignorePublishedComponents>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${mavenCompilerPluginVersion}</version>
-                <configuration>
-                    <source>11</source>
-                    <target>11</target>
-                    <excludes>
-                        <!-- not compliant with Spark4 at all, needs a large rewrite -->
-                        <exclude>io/openlineage/spark3/agent/lifecycle/plan/CreateReplaceDatasetBuilder.java</exclude>
-                        <exclude>io/openlineage/spark31/agent/lifecycle/plan/AlterTableDatasetBuilder.java</exclude>
-                        <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteToMicroBatchDataSourceV1DatasetBuilder.java</exclude>
-                        <exclude>io/openlineage/spark/agent/lifecycle/plan/OptimizedCreateHiveTableAsSelectCommandVisitor.java</exclude>
-                        <exclude>io/openlineage/spark32/agent/lifecycle/plan/AlterTableCommandDatasetBuilder.java</exclude>
-                        <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>
-                        <exclude>io/openlineage/spark/agent/lifecycle/plan/KinesisMicroBatchStreamStrategy.java</exclude>
-                        <exclude>io/openlineage/spark/agent/lifecycle/Spark32VisitorFactoryImpl.java</exclude>
-
-                        <!-- iceberg only, specific iceberg version only for lower spark versions than 4 -->
-                        <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
-                        <exclude>io/openlineage/spark34/agent/lifecycle/plan/column/MergeIntoIceberg13ColumnLineageVisitor.java</exclude>
-                        <exclude>io/openlineage/spark33/agent/lifecycle/plan/ReplaceIcebergDataDatasetBuilder.java</exclude>
-                        <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteIcebergDeltaDatasetBuilder.java</exclude>
-                        <!-- delta THIS SHOULD BE DONE -->
-                        <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
-
-                        <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>
-                        <exclude>io/openlineage/spark/agent/lifecycle/plan/MongoMicroBatchStreamStrategy.java</exclude>
-                    </excludes>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>3.2.0</version>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>src/main/scala</source>
-                                <source>src/main/${profileDir}-scala</source>
-                                <source>${project.build.directory}/shim_compilation_${shimCompilationRuntime}_${sparkCompatVersion}_${scalaCompatVersion}</source>
-                                <source>${project.basedir}/OpenLineage/integration/spark/scala-fixtures/src/main/scala</source>
-                                <source>${project.basedir}/OpenLineage/integration/spark/shared/src/main/java</source>
-                                <source>${project.basedir}/OpenLineage/integration/spark/${openLineageVersionSource}/src/main/java</source>
-                                <source>${project.basedir}/OpenLineage/integration/spark/app/src/main/java</source>
-                                <source>${project.basedir}/OpenLineage/integration/spark-extension-interfaces/src/main/java</source>
-                                <source>${project.basedir}/OpenLineage/integration/spark-extension-entrypoint/src/main/java</source>
-                                <source>${project.basedir}/OpenLineage/integration/spark/spark3/src/main/java</source>
-                                <source>${project.basedir}/OpenLineage/integration/spark/spark31/src/main/java</source>
-                                <source>${project.basedir}/OpenLineage/integration/spark/spark32/src/main/java</source>
-                                <source>${project.basedir}/OpenLineage/integration/spark/spark33/src/main/java</source>
-                                <source>${project.basedir}/OpenLineage/integration/spark/spark34/src/main/java</source>
-                                <source>${project.basedir}/OpenLineage/integration/spark/spark35/src/main/java</source>
-                                <source>${project.basedir}/OpenLineage/integration/spark/vendor/gcp/src/main/java</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>for-scaladocs-etc</id>
-                        <phase>pre-site</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>src/main/scala</source>
-                                <source>src/main/${profileDir}-scala</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>add-test-source</id>
-                        <phase>generate-test-sources</phase>
-                        <goals>
-                            <goal>add-test-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>src/test/scala</source>
-                                <source>src/test/${profileDir}-scala</source>
-                                <source>${project.basedir}/src/test/${encodingDir}</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>scala-maven-plugin</artifactId>
-                <version>${scalaCompilerPluginVersion}</version>
-                <executions>
-                    <execution>
-                        <id>scala-compile</id>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                        <configuration>
-                            <release>18</release>
-                            <args>
-                                <arg>-feature</arg>
-                                <arg>-deprecation</arg>
-                                <arg>-Xelide-below</arg>
-                                <arg>${elidebelow}</arg>
-                                <arg>-dependencyfile</arg>
-                                <arg>${project.build.directory}/.scala_dependencies</arg>
-                                <arg>-g:vars</arg>
-                                <!-- <arg>-Ylog-classpath</arg> -->
-                            </args>
-                            <recompileMode>all</recompileMode>
-                            <scalaCompatVersion>${scalaCompatVersion}</scalaCompatVersion>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>doc-jar</goal>
-                        </goals>
-                        <configuration>
-                            <failOnError>false</failOnError>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                    </execution>
-                    <!-- <execution>
-                        <id>scala-compile-first</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>scala-test-compile</id>
-                        <phase>process-test-resources</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution> -->
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>${mavenSitePluginVersion}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <excludePackageNames>io.openlineage.*.agent.lifecycle.plan.*:io.openlineage.*.agent.facets.builder.*</excludePackageNames>
-                    <failOnError>false</failOnError>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>${dependencyPluginVersion}</version>
-                <executions> <!-- maven scala plugin uses a set to store classpath, it doesn't follow maven's so we need to use the source -->
-                    <execution>
-                        <id>unpack</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>com.sparkutils</groupId>
-                                    <artifactId>shim_compilation_${shimCompilationRuntime}_${sparkCompatVersion}_${scalaCompatVersion}</artifactId>
-                                    <version>${shimCompilationVersion}</version>
-
-                                    <classifier>sources</classifier>
-                                    <type>jar</type>
-
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/shim_compilation_${shimCompilationRuntime}_${sparkCompatVersion}_${scalaCompatVersion}</outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefirePluginVersion}</version>
-                <configuration>
-                    <forkCount>1</forkCount>
-                    <reuseForks>false</reuseForks>
-                    <argLine>-Xmx4g -ea -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED</argLine>
-                    <systemPropertyVariables>
-                        <org.xerial.snappy.tempdir>${java.io.tmpdir}/teamcity/megdp/extrajars</org.xerial.snappy.tempdir>
-                        <buildDirectory>${project.build.directory}</buildDirectory>
-                    </systemPropertyVariables>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${mavenProjectInfoReportsPluginVersion}</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.scoverage</groupId>
-                <artifactId>scoverage-maven-plugin</artifactId>
-                <version>${scoverage.plugin.version}</version>
-                <configuration>
-                    <scalaVersion>${scalaVersion}</scalaVersion>
-                    <!-- compat layer is tested via the normal code,
-                         only pre-resolution plans are anywhere near test worthy -->
-                    <excludedPackages>org.apache.spark.sql</excludedPackages>
-                    <aggregate>true</aggregate>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${mavenJarPluginVersion}</version>
-                <configuration>
-                    <archive>
-                        <manifestEntries>
-                            <Build-Time>${maven.build.timestamp}</Build-Time>
-                        </manifestEntries>
-                        <manifestSections>
-                            <manifestSection>
-                                <name>Versions</name>
-                                <manifestEntries>
-                                    <Project-Version>${project.version}</Project-Version>
-                                    <Project-Git-Hash>${GITHUB_SHA}</Project-Git-Hash>
-                                    <Project-CI-Branch>${GITHUB_BASE_REF}</Project-CI-Branch>
-                                    <Project-CI-Run-ID>${GITHUB_RUN_ID}</Project-CI-Run-ID>
-                                    <Project-URL>${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}</Project-URL>
-                                </manifestEntries>
-                            </manifestSection>
-                        </manifestSections>
-                    </archive>
-                    <excludes>
-                        <!-- many dbr requires faking the source, we should not include the output -->
-                        <exclude>org/apache/spark/sql/catalyst/**</exclude>
-                        <exclude>org/apache/spark/sql/internal/**</exclude>
-                        <!-- shouldn't be there, really bad for multi-module projects -->
-                        <exclude>log4j2.xml</exclude>
-                    </excludes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-                <version>${mavenFlattenPluginVersion}</version>
-                <configuration>
-                    <flattenMode>oss</flattenMode>
-                </configuration>
-                <executions>
-                    <!-- enable flattening -->
-                    <execution>
-                        <id>flatten</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>flatten</goal>
-                        </goals>
-                    </execution>
-                    <!-- ensure proper cleanup -->
-                    <execution>
-                        <id>flatten.clean</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>3.0.1</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                        <configuration>
-                            <!-- Prevent gpg from using pinentry programs -->
-                            <gpgArguments>
-                                <arg>--pinentry-mode</arg>
-                                <arg>loopback</arg>
-                            </gpgArguments>
-                        </configuration>
-                    </execution>
-                </executions>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
-                <groupId>org.sonatype.central</groupId>
-                <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.7.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <publishingServerId>central</publishingServerId>
-                    <autoPublish>true</autoPublish>
-                    <waitUntil>published</waitUntil>
-                    <ignorePublishedComponents>true</ignorePublishedComponents>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
             </plugin>
         </plugins>
-
     </build>
+
     <reporting>
         <excludeDefaults>true</excludeDefaults>
         <plugins>
@@ -1006,7 +661,8 @@
                         <arg>-diagrams</arg>
                         <arg>-diagrams-debug</arg>
                         <arg>-diagrams-dot-timeout</arg>
-                        <arg>40</arg> <!-- default is 10s and it may not be enough, the basic things which have issue _ARE_ rendering -->
+                        <arg>40
+                        </arg> <!-- default is 10s and it may not be enough, the basic things which have issue _ARE_ rendering -->
                         <arg>-diagrams-dot-path</arg>
                         <arg>./dott</arg>
                         <!-- <arg>-diagrams-dot-restart</arg>

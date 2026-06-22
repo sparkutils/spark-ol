@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>  <!-- rebuild -->
+    <parent>
+        <groupId>com.sparkutils</groupId>
+        <artifactId>spark-ol_root_${dbrCompatVersion}${sparkCompatVersion}_${scalaCompatVersion}</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>spark-ol_${dbrCompatVersion}${sparkCompatVersion}_${scalaCompatVersion}</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Spark OpenLineage</name>
+    <description>A sparkutils packaging of OpenLineage Spark listeners</description>
+
+    <profiles>
+        <profile>
+            <id>Spark350</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-compiler-plugin</artifactId>
+                            <version>${mavenCompilerPluginVersion}</version>
+                            <configuration>
+                                <source>${javaLangVersion}</source>
+                                <target>${javaLangVersion}</target>
+                                <excludes>
+                                    <!-- not compliant with Spark4 at all, needs a large rewrite -->
+                                    <exclude>io/openlineage/spark3/agent/lifecycle/plan/CreateReplaceDatasetBuilder.java</exclude>
+                                    <exclude>io/openlineage/spark31/agent/lifecycle/plan/AlterTableDatasetBuilder.java</exclude>
+                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteToMicroBatchDataSourceV1DatasetBuilder.java</exclude>
+                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/OptimizedCreateHiveTableAsSelectCommandVisitor.java</exclude>
+                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/AlterTableCommandDatasetBuilder.java</exclude>
+                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>
+                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/KinesisMicroBatchStreamStrategy.java</exclude>
+                                    <exclude>io/openlineage/spark/agent/lifecycle/Spark32VisitorFactoryImpl.java</exclude>
+
+                                    <!-- iceberg only, specific iceberg version only for lower spark versions than 4 -->
+                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
+                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/column/MergeIntoIceberg13ColumnLineageVisitor.java</exclude>
+                                    <exclude>io/openlineage/spark33/agent/lifecycle/plan/ReplaceIcebergDataDatasetBuilder.java</exclude>
+                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteIcebergDeltaDatasetBuilder.java</exclude>
+                                    <exclude>io/openlineage/spark/agent/lifecycle/Spark40DatasetBuilderFactory.java</exclude>
+                                    <!-- delta THIS SHOULD BE DONE -->
+                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
+
+                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>
+                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/MongoMicroBatchStreamStrategy.java</exclude>
+                                </excludes>
+                                <annotationProcessorPaths>
+                                    <path>
+                                        <groupId>org.projectlombok</groupId>
+                                        <artifactId>lombok</artifactId>
+                                        <version>${lombok.version}</version>
+                                    </path>
+                                </annotationProcessorPaths>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
+            <id>Spark4</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-compiler-plugin</artifactId>
+                            <version>${mavenCompilerPluginVersion}</version>
+                            <configuration>
+                                <source>${javaLangVersion}</source>
+                                <target>${javaLangVersion}</target>
+                                <excludes>
+                                    <!-- not compliant with Spark4 at all, needs a large rewrite -->
+                                    <exclude>io/openlineage/spark3/agent/lifecycle/plan/CreateReplaceDatasetBuilder.java</exclude>
+                                    <exclude>io/openlineage/spark31/agent/lifecycle/plan/AlterTableDatasetBuilder.java</exclude>
+                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteToMicroBatchDataSourceV1DatasetBuilder.java</exclude>
+                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/OptimizedCreateHiveTableAsSelectCommandVisitor.java</exclude>
+                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/AlterTableCommandDatasetBuilder.java</exclude>
+                                    <!--                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>-->
+                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/KinesisMicroBatchStreamStrategy.java</exclude>
+                                    <!--                                    <exclude>io/openlineage/spark/agent/lifecycle/Spark32VisitorFactoryImpl.java</exclude>-->
+
+                                    <!-- iceberg only, specific iceberg version only for lower spark versions than 4 -->
+                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
+                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/column/MergeIntoIceberg13ColumnLineageVisitor.java</exclude>
+                                    <exclude>io/openlineage/spark33/agent/lifecycle/plan/ReplaceIcebergDataDatasetBuilder.java</exclude>
+                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteIcebergDeltaDatasetBuilder.java</exclude>
+                                    <!-- delta THIS SHOULD BE DONE -->
+                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
+
+                                    <!--                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>-->
+                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/MongoMicroBatchStreamStrategy.java</exclude>
+                                </excludes>
+                                <annotationProcessorPaths>
+                                    <path>
+                                        <groupId>org.projectlombok</groupId>
+                                        <artifactId>lombok</artifactId>
+                                        <version>${lombok.version}</version>
+                                    </path>
+                                </annotationProcessorPaths>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
+            <id>Spark41</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-compiler-plugin</artifactId>
+                            <version>${mavenCompilerPluginVersion}</version>
+                            <configuration>
+                                <source>${javaLangVersion}</source>
+                                <target>${javaLangVersion}</target>
+                                <excludes>
+                                    <!-- not compliant with Spark4 at all, needs a large rewrite -->
+                                    <exclude>io/openlineage/spark3/agent/lifecycle/plan/CreateReplaceDatasetBuilder.java</exclude>
+                                    <exclude>io/openlineage/spark31/agent/lifecycle/plan/AlterTableDatasetBuilder.java</exclude>
+                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteToMicroBatchDataSourceV1DatasetBuilder.java</exclude>
+                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/OptimizedCreateHiveTableAsSelectCommandVisitor.java</exclude>
+                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/AlterTableCommandDatasetBuilder.java</exclude>
+<!--                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>-->
+                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/KinesisMicroBatchStreamStrategy.java</exclude>
+<!--                                    <exclude>io/openlineage/spark/agent/lifecycle/Spark32VisitorFactoryImpl.java</exclude>-->
+
+                                    <!-- iceberg only, specific iceberg version only for lower spark versions than 4 -->
+                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
+                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/column/MergeIntoIceberg13ColumnLineageVisitor.java</exclude>
+                                    <exclude>io/openlineage/spark33/agent/lifecycle/plan/ReplaceIcebergDataDatasetBuilder.java</exclude>
+                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteIcebergDeltaDatasetBuilder.java</exclude>
+                                    <!-- delta THIS SHOULD BE DONE -->
+                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
+
+<!--                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>-->
+                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/MongoMicroBatchStreamStrategy.java</exclude>
+                                </excludes>
+                                <annotationProcessorPaths>
+                                    <path>
+                                        <groupId>org.projectlombok</groupId>
+                                        <artifactId>lombok</artifactId>
+                                        <version>${lombok.version}</version>
+                                    </path>
+                                </annotationProcessorPaths>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+    <dependencies>
+        <!--
+        <dependency>
+            <groupId>com.globalmentor</groupId>
+            <artifactId>hadoop-bare-naked-local-fs</artifactId>
+            <version>${naked-local-fs-version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.hadoop</groupId>
+                    <artifactId>hadoop-commons</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sparkutils</groupId>
+            <artifactId>shim_compilation_${shimCompilationRuntime}_${sparkCompatVersion}_${scalaCompatVersion}</artifactId>
+            <version>${shimCompilationVersion}</version>
+            <scope>provided</scope>
+            <classifier>sources</classifier>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.spark</groupId>
+                    <artifactId>spark-sql_${scalaCompatVersion}</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.sparkutils</groupId>
+            <artifactId>shim_runtime_${shimRuntime}_${sparkCompatVersion}_${scalaCompatVersion}</artifactId>
+            <version>${shimRuntimeVersion}</version>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scalaVersion}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_${scalaCompatVersion}</artifactId>
+            <version>${scalatestVersion}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junitVersion}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+            <version>${scalaVersion}</version>
+            <scope>test</scope>
+        </dependency>
+-->
+        <dependency>
+            <groupId>com.sparkutils</groupId>
+            <artifactId>spark-ol_api_${dbrCompatVersion}${sparkCompatVersion}_${scalaCompatVersion}</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_${scalaCompatVersion}</artifactId>
+            <version>${sparkVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-hive_${scalaCompatVersion}</artifactId>
+            <version>${sparkVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_${scalaCompatVersion}</artifactId>
+            <version>${sparkVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql-kafka-0-10_${scalaCompatVersion}</artifactId>
+            <version>${sparkVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-common</artifactId>
+            <version>${hiveVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4jVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>${jacksonVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
+            <version>${jacksonVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jacksonVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-blackbird</artifactId>
+            <version>${jacksonVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-scala_${scalaCompatVersion}</artifactId>
+            <version>${jacksonVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jacksonVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jacksonVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jacksonVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-core</artifactId>
+            <version>${micrometerVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-statsd</artifactId>
+            <version>${micrometerVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>aws-core</artifactId>
+            <version>${awsVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>url-connection-client</artifactId>
+            <version>${awsVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>sts</artifactId>
+            <version>${awsVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- Source: https://mvnrepository.com/artifact/com.google.cloud.spark/spark-bigquery -->
+        <dependency>
+            <groupId>com.google.cloud.spark</groupId>
+            <artifactId>spark-bigquery_${scalaCompatVersion}</artifactId>
+            <version>${gcSparkVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>io.delta</groupId>
+            <artifactId>delta-${deltaArtifact}_${scalaCompatVersion}</artifactId>
+            <version>${deltaCoreVersion}</version>
+            <scope>provided</scope> <!-- must be provided as there is no provided test, triggers antlr version issues -->
+            <exclusions>
+                <!-- let hive drive the version used, allows Spark 4 tests to run -->
+                <exclusion>
+                    <groupId>org.antlr</groupId>
+                    <artifactId>antlr4-runtime</artifactId>
+                </exclusion>
+            </exclusions>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.iceberg</groupId>
+            <artifactId>iceberg-spark</artifactId>
+            <version>${icebergVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.iceberg</groupId>
+            <artifactId>iceberg-core</artifactId>
+            <version>${icebergVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.iceberg</groupId>
+            <artifactId>iceberg-spark-runtime-${icebergCompatVersion}_${scalaCompatVersion}</artifactId>
+            <version>${icebergVersion}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents.core5</groupId>
+            <artifactId>httpcore5</artifactId>
+            <version>${httpComponentVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>${httpComponentVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.openlineage</groupId>
+            <artifactId>openlineage-java</artifactId>
+            <version>${openLineageVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.openlineage</groupId>
+            <artifactId>openlineage-sql-java</artifactId> <!-- OpenLineage/integration/sql/iface-java/src/main/java/io/openlineage/sql/ExtractionError.java -->
+            <version>${openLineageVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <excludePackageNames>io.openlineage.*.agent.lifecycle.plan.*:io.openlineage.*.agent.facets.builder.*</excludePackageNames>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/scala</source>
+                                <source>src/main/${profileDir}-scala</source>
+                                <source>${project.build.directory}/shim_compilation_${shimCompilationRuntime}_${sparkCompatVersion}_${scalaCompatVersion}</source>
+                                <source>${project.basedir}/OpenLineage/integration/spark/scala-fixtures/src/main/scala</source>
+                                <source>${project.basedir}/OpenLineage/integration/spark/shared/src/main/java</source>
+                                <source>${project.basedir}/OpenLineage/integration/spark/${openLineageVersionSource}/src/main/java</source>
+                                <source>${project.basedir}/OpenLineage/integration/spark/app/src/main/java</source>
+                                <source>${project.basedir}/OpenLineage/integration/spark-extension-interfaces/src/main/java</source>
+                                <source>${project.basedir}/OpenLineage/integration/spark-extension-entrypoint/src/main/java</source>
+                                <source>${project.basedir}/OpenLineage/integration/spark/spark3/src/main/java</source>
+                                <source>${project.basedir}/OpenLineage/integration/spark/spark31/src/main/java</source>
+                                <source>${project.basedir}/OpenLineage/integration/spark/spark32/src/main/java</source>
+                                <source>${project.basedir}/OpenLineage/integration/spark/spark33/src/main/java</source>
+                                <source>${project.basedir}/OpenLineage/integration/spark/spark34/src/main/java</source>
+                                <source>${project.basedir}/OpenLineage/integration/spark/spark35/src/main/java</source>
+<!--                                <source>${project.basedir}/OpenLineage/integration/spark/spark40/src/main/java</source>-->
+                                <source>${project.basedir}/OpenLineage/integration/spark/vendor/gcp/src/main/java</source>
+                                <source>${project.basedir}/OpenLineage/integration/spark/vendor/gcp/src/main/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>for-scaladocs-etc</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/scala</source>
+                                <source>src/main/${profileDir}-scala</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/test/scala</source>
+                                <source>src/test/${profileDir}-scala</source>
+                                <source>${project.basedir}/src/test/${encodingDir}</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+</project>

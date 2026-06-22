@@ -1,7 +1,0 @@
-/**
- * Dummy Scaladoc
- *
- */
-class EmptyScala {
-
-}

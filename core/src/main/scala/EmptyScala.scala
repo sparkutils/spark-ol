@@ -1,0 +1,7 @@
+/**
+ * Dummy Scaladoc
+ *
+ */
+class EmptyScala {
+
+}
