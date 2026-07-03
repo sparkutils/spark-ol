@@ -300,7 +300,7 @@
     </profiles>
 
     <properties>
-        <revision>0.0.5-RC17</revision>
+        <revision>0.0.5-RC18</revision>
 
         <mavenFlattenPluginVersion>1.2.7</mavenFlattenPluginVersion>
         <mavenProjectInfoReportsPluginVersion>3.4.5</mavenProjectInfoReportsPluginVersion>
@@ -614,6 +614,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>10</source>
+                    <target>10</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

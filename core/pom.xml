@@ -506,7 +506,7 @@
                                 <source>${project.basedir}/OpenLineage/integration/spark/spark33/src/main/java</source>
                                 <source>${project.basedir}/OpenLineage/integration/spark/spark34/src/main/java</source>
                                 <source>${project.basedir}/OpenLineage/integration/spark/spark35/src/main/java</source>
-<!--                                <source>${project.basedir}/OpenLineage/integration/spark/spark40/src/main/java</source>-->
+                                <source>${project.basedir}/OpenLineage/integration/spark/spark40/src/main/java</source>
                                 <source>${project.basedir}/OpenLineage/integration/spark/vendor/gcp/src/main/java</source>
                                 <source>${project.basedir}/OpenLineage/integration/spark/vendor/gcp/src/main/java</source>
                             </sources>
