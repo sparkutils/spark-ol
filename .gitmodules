@@ -1,4 +1,4 @@
 [submodule "OpenLineage"]
-	path = OpenLineage
+	path = core/OpenLineage
 	url = git@github.com:sparkutils/OpenLineage.git
 	branch = temp/Spark4_clean
