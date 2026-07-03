@@ -24,7 +24,7 @@ jobs:
       theMatrix: |
         {
           "profile": [ "Spark350" ],
-          "scala": [ "scala_2.12.18" ]
+          "scala": [ "scala_2.12.18", "scala_2.13.18" ]
         }
       jdk: 11
       mvnCliOpts: *MAVEN_CLI_OPTS
