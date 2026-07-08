@@ -31,6 +31,13 @@
         <developerConnection>scm:git:ssh://github.com:sparkutils/spark-ol.git</developerConnection>
         <url>http://github.com/sparkutils/spark-ol/tree/master</url>
     </scm>
+    <dependencies>
+        <dependency>
+            <groupId>io.openlineage</groupId>
+            <artifactId>openlineage-java</artifactId>
+            <version>1.51.0</version>
+        </dependency>
+    </dependencies>
 
     <profiles>
         <profile>
@@ -300,7 +307,7 @@
     </profiles>
 
     <properties>
-        <revision>0.0.5-RC18</revision>
+        <revision>0.0.5-RC24</revision>
 
         <mavenFlattenPluginVersion>1.2.7</mavenFlattenPluginVersion>
         <mavenProjectInfoReportsPluginVersion>3.4.5</mavenProjectInfoReportsPluginVersion>
@@ -344,7 +351,7 @@
 
         <encodingDir>classic</encodingDir>
 
-        <openLineageVersion>1.48.0</openLineageVersion>
+        <openLineageVersion>1.51.0</openLineageVersion>
         <lombok.version>1.18.46</lombok.version>
 
         <!-- spark41 versions -->
