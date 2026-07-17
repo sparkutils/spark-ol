@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>  <!-- rebuild -->
     <parent>
         <groupId>com.sparkutils</groupId>
@@ -28,26 +29,55 @@
                                 <target>${javaLangVersion}</target>
                                 <excludes>
                                     <!-- not compliant with Spark4 at all, needs a large rewrite -->
-                                    <exclude>io/openlineage/spark3/agent/lifecycle/plan/CreateReplaceDatasetBuilder.java</exclude>
-                                    <exclude>io/openlineage/spark31/agent/lifecycle/plan/AlterTableDatasetBuilder.java</exclude>
-                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteToMicroBatchDataSourceV1DatasetBuilder.java</exclude>
-                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/OptimizedCreateHiveTableAsSelectCommandVisitor.java</exclude>
-                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/AlterTableCommandDatasetBuilder.java</exclude>
-                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>
-                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/KinesisMicroBatchStreamStrategy.java</exclude>
-                                    <exclude>io/openlineage/spark/agent/lifecycle/Spark32VisitorFactoryImpl.java</exclude>
+                                    <exclude>
+                                        io/openlineage/spark3/agent/lifecycle/plan/CreateReplaceDatasetBuilder.java
+                                    </exclude>
+                                    <exclude>io/openlineage/spark31/agent/lifecycle/plan/AlterTableDatasetBuilder.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark34/agent/lifecycle/plan/WriteToMicroBatchDataSourceV1DatasetBuilder.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark/agent/lifecycle/plan/OptimizedCreateHiveTableAsSelectCommandVisitor.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark32/agent/lifecycle/plan/AlterTableCommandDatasetBuilder.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark/agent/lifecycle/plan/KinesisMicroBatchStreamStrategy.java
+                                    </exclude>
+                                    <exclude>io/openlineage/spark/agent/lifecycle/Spark32VisitorFactoryImpl.java
+                                    </exclude>
 
                                     <!-- iceberg only, specific iceberg version only for lower spark versions than 4 -->
-                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
-                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/column/MergeIntoIceberg13ColumnLineageVisitor.java</exclude>
-                                    <exclude>io/openlineage/spark33/agent/lifecycle/plan/ReplaceIcebergDataDatasetBuilder.java</exclude>
-                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteIcebergDeltaDatasetBuilder.java</exclude>
-                                    <exclude>io/openlineage/spark/agent/lifecycle/Spark40DatasetBuilderFactory.java</exclude>
+                                    <exclude>
+                                        io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark34/agent/lifecycle/plan/column/MergeIntoIceberg13ColumnLineageVisitor.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark33/agent/lifecycle/plan/ReplaceIcebergDataDatasetBuilder.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark34/agent/lifecycle/plan/WriteIcebergDeltaDatasetBuilder.java
+                                    </exclude>
+                                    <exclude>io/openlineage/spark/agent/lifecycle/Spark40DatasetBuilderFactory.java
+                                    </exclude>
                                     <!-- delta THIS SHOULD BE DONE -->
-                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
+                                    <exclude>
+                                        io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java
+                                    </exclude>
 
-                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>
-                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/MongoMicroBatchStreamStrategy.java</exclude>
+                                    <exclude>
+                                        io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark/agent/lifecycle/plan/MongoMicroBatchStreamStrategy.java
+                                    </exclude>
                                 </excludes>
                                 <annotationProcessorPaths>
                                     <path>
@@ -76,25 +106,48 @@
                                 <target>${javaLangVersion}</target>
                                 <excludes>
                                     <!-- not compliant with Spark4 at all, needs a large rewrite -->
-                                    <exclude>io/openlineage/spark3/agent/lifecycle/plan/CreateReplaceDatasetBuilder.java</exclude>
-                                    <exclude>io/openlineage/spark31/agent/lifecycle/plan/AlterTableDatasetBuilder.java</exclude>
-                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteToMicroBatchDataSourceV1DatasetBuilder.java</exclude>
-                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/OptimizedCreateHiveTableAsSelectCommandVisitor.java</exclude>
-                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/AlterTableCommandDatasetBuilder.java</exclude>
+                                    <exclude>
+                                        io/openlineage/spark3/agent/lifecycle/plan/CreateReplaceDatasetBuilder.java
+                                    </exclude>
+                                    <exclude>io/openlineage/spark31/agent/lifecycle/plan/AlterTableDatasetBuilder.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark34/agent/lifecycle/plan/WriteToMicroBatchDataSourceV1DatasetBuilder.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark/agent/lifecycle/plan/OptimizedCreateHiveTableAsSelectCommandVisitor.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark32/agent/lifecycle/plan/AlterTableCommandDatasetBuilder.java
+                                    </exclude>
                                     <!--                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>-->
-                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/KinesisMicroBatchStreamStrategy.java</exclude>
+                                    <exclude>
+                                        io/openlineage/spark/agent/lifecycle/plan/KinesisMicroBatchStreamStrategy.java
+                                    </exclude>
                                     <!--                                    <exclude>io/openlineage/spark/agent/lifecycle/Spark32VisitorFactoryImpl.java</exclude>-->
 
                                     <!-- iceberg only, specific iceberg version only for lower spark versions than 4 -->
-                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
-                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/column/MergeIntoIceberg13ColumnLineageVisitor.java</exclude>
-                                    <exclude>io/openlineage/spark33/agent/lifecycle/plan/ReplaceIcebergDataDatasetBuilder.java</exclude>
-                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteIcebergDeltaDatasetBuilder.java</exclude>
+                                    <exclude>
+                                        io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark34/agent/lifecycle/plan/column/MergeIntoIceberg13ColumnLineageVisitor.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark33/agent/lifecycle/plan/ReplaceIcebergDataDatasetBuilder.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark34/agent/lifecycle/plan/WriteIcebergDeltaDatasetBuilder.java
+                                    </exclude>
                                     <!-- delta THIS SHOULD BE DONE -->
-                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
+                                    <exclude>
+                                        io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java
+                                    </exclude>
 
                                     <!--                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>-->
-                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/MongoMicroBatchStreamStrategy.java</exclude>
+                                    <exclude>
+                                        io/openlineage/spark/agent/lifecycle/plan/MongoMicroBatchStreamStrategy.java
+                                    </exclude>
                                 </excludes>
                                 <annotationProcessorPaths>
                                     <path>
@@ -123,25 +176,48 @@
                                 <target>${javaLangVersion}</target>
                                 <excludes>
                                     <!-- not compliant with Spark4 at all, needs a large rewrite -->
-                                    <exclude>io/openlineage/spark3/agent/lifecycle/plan/CreateReplaceDatasetBuilder.java</exclude>
-                                    <exclude>io/openlineage/spark31/agent/lifecycle/plan/AlterTableDatasetBuilder.java</exclude>
-                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteToMicroBatchDataSourceV1DatasetBuilder.java</exclude>
-                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/OptimizedCreateHiveTableAsSelectCommandVisitor.java</exclude>
-                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/AlterTableCommandDatasetBuilder.java</exclude>
-<!--                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>-->
-                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/KinesisMicroBatchStreamStrategy.java</exclude>
-<!--                                    <exclude>io/openlineage/spark/agent/lifecycle/Spark32VisitorFactoryImpl.java</exclude>-->
+                                    <exclude>
+                                        io/openlineage/spark3/agent/lifecycle/plan/CreateReplaceDatasetBuilder.java
+                                    </exclude>
+                                    <exclude>io/openlineage/spark31/agent/lifecycle/plan/AlterTableDatasetBuilder.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark34/agent/lifecycle/plan/WriteToMicroBatchDataSourceV1DatasetBuilder.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark/agent/lifecycle/plan/OptimizedCreateHiveTableAsSelectCommandVisitor.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark32/agent/lifecycle/plan/AlterTableCommandDatasetBuilder.java
+                                    </exclude>
+                                    <!--                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>-->
+                                    <exclude>
+                                        io/openlineage/spark/agent/lifecycle/plan/KinesisMicroBatchStreamStrategy.java
+                                    </exclude>
+                                    <!--                                    <exclude>io/openlineage/spark/agent/lifecycle/Spark32VisitorFactoryImpl.java</exclude>-->
 
                                     <!-- iceberg only, specific iceberg version only for lower spark versions than 4 -->
-                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
-                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/column/MergeIntoIceberg13ColumnLineageVisitor.java</exclude>
-                                    <exclude>io/openlineage/spark33/agent/lifecycle/plan/ReplaceIcebergDataDatasetBuilder.java</exclude>
-                                    <exclude>io/openlineage/spark34/agent/lifecycle/plan/WriteIcebergDeltaDatasetBuilder.java</exclude>
+                                    <exclude>
+                                        io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark34/agent/lifecycle/plan/column/MergeIntoIceberg13ColumnLineageVisitor.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark33/agent/lifecycle/plan/ReplaceIcebergDataDatasetBuilder.java
+                                    </exclude>
+                                    <exclude>
+                                        io/openlineage/spark34/agent/lifecycle/plan/WriteIcebergDeltaDatasetBuilder.java
+                                    </exclude>
                                     <!-- delta THIS SHOULD BE DONE -->
-                                    <exclude>io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java</exclude>
+                                    <exclude>
+                                        io/openlineage/spark32/agent/lifecycle/plan/column/MergeIntoDelta11ColumnLineageVisitor.java
+                                    </exclude>
 
-<!--                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>-->
-                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/MongoMicroBatchStreamStrategy.java</exclude>
+                                    <!--                                    <exclude>io/openlineage/spark/agent/lifecycle/plan/StreamingDataSourceV2RelationVisitor.java</exclude>-->
+                                    <exclude>
+                                        io/openlineage/spark/agent/lifecycle/plan/MongoMicroBatchStreamStrategy.java
+                                    </exclude>
                                 </excludes>
                                 <annotationProcessorPaths>
                                     <path>
@@ -157,6 +233,11 @@
             </build>
         </profile>
     </profiles>
+    <properties>
+        <assertjVersion>3.27.7</assertjVersion>
+        <junit5Version>5.11.4</junit5Version>
+        <mockitoVersion>4.11.0</mockitoVersion>
+    </properties>
     <dependencies>
         <!--
         <dependency>
@@ -383,7 +464,8 @@
             <groupId>io.delta</groupId>
             <artifactId>delta-${deltaArtifact}_${scalaCompatVersion}</artifactId>
             <version>${deltaCoreVersion}</version>
-            <scope>provided</scope> <!-- must be provided as there is no provided test, triggers antlr version issues -->
+            <scope>provided
+            </scope> <!-- must be provided as there is no provided test, triggers antlr version issues -->
             <exclusions>
                 <!-- let hive drive the version used, allows Spark 4 tests to run -->
                 <exclusion>
@@ -436,7 +518,8 @@
 
         <dependency>
             <groupId>io.openlineage</groupId>
-            <artifactId>openlineage-sql-java</artifactId> <!-- OpenLineage/integration/sql/iface-java/src/main/java/io/openlineage/sql/ExtractionError.java -->
+            <artifactId>openlineage-sql-java
+            </artifactId> <!-- OpenLineage/integration/sql/iface-java/src/main/java/io/openlineage/sql/ExtractionError.java -->
             <version>${openLineageVersion}</version>
         </dependency>
 
@@ -445,6 +528,36 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertjVersion}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit5Version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockitoVersion}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockitoVersion}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -470,7 +583,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <excludePackageNames>io.openlineage.*.agent.lifecycle.plan.*:io.openlineage.*.agent.facets.builder.*</excludePackageNames>
+                    <excludePackageNames>
+                        io.openlineage.*.agent.lifecycle.plan.*:io.openlineage.*.agent.facets.builder.*
+                    </excludePackageNames>
                     <failOnError>false</failOnError>
                 </configuration>
             </plugin>
@@ -493,7 +608,9 @@
                             <sources>
                                 <source>src/main/scala</source>
                                 <source>src/main/${profileDir}-scala</source>
-                                <source>${project.build.directory}/shim_compilation_${shimCompilationRuntime}_${sparkCompatVersion}_${scalaCompatVersion}</source>
+                                <source>
+                                    ${project.build.directory}/shim_compilation_${shimCompilationRuntime}_${sparkCompatVersion}_${scalaCompatVersion}
+                                </source>
                                 <source>OpenLineage/integration/spark/scala-fixtures/src/main/scala</source>
                                 <source>OpenLineage/integration/spark/shared/src/main/java</source>
                                 <source>OpenLineage/integration/spark/${openLineageVersionSource}/src/main/java</source>
@@ -506,7 +623,7 @@
                                 <source>OpenLineage/integration/spark/spark33/src/main/java</source>
                                 <source>OpenLineage/integration/spark/spark34/src/main/java</source>
                                 <source>OpenLineage/integration/spark/spark35/src/main/java</source>
-<!--                                <source>core/OpenLineage/integration/spark/spark40/src/main/java</source>-->
+                                <!--                                <source>core/OpenLineage/integration/spark/spark40/src/main/java</source>-->
                                 <source>OpenLineage/integration/spark/vendor/gcp/src/main/java</source>
                                 <source>OpenLineage/integration/spark/vendor/gcp/src/main/java</source>
                             </sources>
@@ -534,6 +651,7 @@
                         <configuration>
                             <sources>
                                 <source>src/test/scala</source>
+                                <source>src/test/java</source>
                                 <source>src/test/${profileDir}-scala</source>
                                 <source>${project.basedir}/src/test/${encodingDir}</source>
                             </sources>
@@ -545,6 +663,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
 
         </plugins>

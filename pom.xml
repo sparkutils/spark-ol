@@ -307,7 +307,7 @@
     </profiles>
 
     <properties>
-        <revision>0.0.5-RC24</revision>
+        <revision>0.0.5-RC28</revision>
 
         <mavenFlattenPluginVersion>1.2.7</mavenFlattenPluginVersion>
         <mavenProjectInfoReportsPluginVersion>3.4.5</mavenProjectInfoReportsPluginVersion>
@@ -464,7 +464,7 @@
                             </org.xerial.snappy.tempdir>
                             <buildDirectory>${project.build.directory}</buildDirectory>
                         </systemPropertyVariables>
-                        <skipTests>true</skipTests>
+                        <skipTests>false</skipTests>
                     </configuration>
                 </plugin>
 
