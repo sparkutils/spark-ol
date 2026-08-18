@@ -1,0 +1,26 @@
+spark.version = 4.0.0
+scala = 2.13.16
+dbr = 17.3
+visitor codesource = file:/databricks/jars/zzz_spark-ol_4.0.0.oss_4.0_2.13-0.0.5-RC28.jar
+visitor has describeTypedOperator = true
+visitor has argumentTypeName = true
+visitor has objectTypeName = true
+--- MapElements on DBR
+    argumentClass = java.lang.Class
+    argumentSchema = org.apache.spark.sql.types.StructType
+    outputObjAttr = org.apache.spark.sql.catalyst.expressions.Attribute
+--- MapPartitions on DBR
+    argumentClass = <ABSENT>
+    argumentSchema = <ABSENT>
+    outputObjAttr = org.apache.spark.sql.catalyst.expressions.Attribute
+--- live MapElements metadata off the optimized plan
+    argumentClass  = $lined9123339a775413bb44ffad89f542f7325.$read$$iw$$iw$$iw$$iw$$iw$$iw$PersonP
+    argumentSchema = [customer_id, name, email, country]
+    outputObjAttr  = obj : ObjectType(class $lined9123339a775413bb44ffad89f542f7325.$read$$iw$$iw$$iw$$iw$$iw$$iw$ContactP)
+--- plan ---
+SerializeFromObject [invoke(knownnotnull(assertnotnull(input[0, $lined9123339a775413bb44ffad89f542f7325.$read$$iw$$iw$$iw$$iw$$iw$$iw$ContactP, true])).customer_id()) AS customer_id#2092, static_invoke(UTF8String.fromString(invoke(knownnotnull(assertnotnull(input[0, $lined9123339a775413bb44ffad89f542f7325.$read$$iw$$iw$$iw$$iw$$iw$$iw$ContactP, true])).email_masked()))) AS email_masked#2093]
++- MapElements $lined9123339a775413bb44ffad89f542f7325.$read$$iw$$iw$$iw$$iw$$iw$$iw$$Lambda$22767/0x00007fc2285071b8@632d4a4, class $lined9123339a775413bb44ffad89f542f7325.$read$$iw$$iw$$iw$$iw$$iw$$iw$PersonP, [StructField(customer_id,IntegerType,false), StructField(name,StringType,true), StructField(email,StringType,true), StructField(country,StringType,true)], obj#2089: $lined9123339a775413bb44ffad89f542f7325.$read$$iw$$iw$$iw$$iw$$iw$$iw$ContactP
+   +- DeserializeToObject newInstance(class $lined9123339a775413bb44ffad89f542f7325.$read$$iw$$iw$$iw$$iw$$iw$$iw$PersonP), obj#2086: $lined9123339a775413bb44ffad89f542f7325.$read$$iw$$iw$$iw$$iw$$iw$$iw$PersonP
+      +- Project [customer_id#2063, name#2064, email#2065, country#2066]
+         +- Relation databricks_ws.openlineage_demo.raw_customers[customer_id#2063,name#2064,email#2065,country#2066,signup_date#2067] parquet
+

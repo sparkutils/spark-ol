@@ -623,8 +623,11 @@
                                 <source>OpenLineage/integration/spark/spark33/src/main/java</source>
                                 <source>OpenLineage/integration/spark/spark34/src/main/java</source>
                                 <source>OpenLineage/integration/spark/spark35/src/main/java</source>
-                                <!--                                <source>core/OpenLineage/integration/spark/spark40/src/main/java</source>-->
-                                <source>OpenLineage/integration/spark/vendor/gcp/src/main/java</source>
+                                <!-- NB: spark40 is deliberately NOT listed here. It is pulled in by the
+                                     ${openLineageVersionSource} line above, which the root pom sets to
+                                     spark40 for Spark4/Spark41/17.3.dbr/18.3.dbr and spark35 otherwise.
+                                     A hardcoded spark40 entry would double-add the root on Spark 4 and
+                                     wrongly add it on 3.5. -->
                                 <source>OpenLineage/integration/spark/vendor/gcp/src/main/java</source>
                             </sources>
                         </configuration>
