@@ -1,0 +1,36 @@
+{
+  "cluster_name": "spark-ol-accessor-t6e86c247",
+  "spark_version": "17.3.x-scala2.13",
+  "node_type_id": "Standard_D4ds_v5",
+  "num_workers": 0,
+  "autotermination_minutes": 20,
+  "data_security_mode": "SINGLE_USER",
+  "single_user_name": "USER_UPN",
+  "custom_tags": {
+    "ResourceClass": "SingleNode"
+  },
+  "azure_attributes": {
+    "availability": "ON_DEMAND_AZURE",
+    "first_on_demand": 1,
+    "spot_bid_max_price": -1
+  },
+  "init_scripts": [
+    {
+      "workspace": {
+        "destination": "/Users/USER_UPN/openlineage_demo/spark-ol-dbx-init.sh"
+      }
+    }
+  ],
+  "spark_conf": {
+    "spark.databricks.cluster.profile": "singleNode",
+    "spark.master": "local[*]",
+    "spark.extraListeners": "io.openlineage.spark.agent.OpenLineageSparkListener,com.databricks.backend.daemon.driver.DBCEventLoggingListener",
+    "spark.openlineage.transport.type": "file",
+    "spark.openlineage.transport.location": "/local_disk0/ol_events/events.jsonl",
+    "spark.openlineage.namespace": "spark-ol-e2e",
+    "spark.openlineage.version": "v1",
+    "spark.openlineage.columnLineage.datasetLineageEnabled": "true",
+    "spark.openlineage.columnLineage.typedBoundaryFanInEnabled": "true",
+    "spark.openlineage.columnLineage.typedBoundaryFanInMaxEdges": "10000"
+  }
+}
