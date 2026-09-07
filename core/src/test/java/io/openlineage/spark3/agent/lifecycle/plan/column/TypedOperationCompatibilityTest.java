@@ -50,6 +50,7 @@ class TypedOperationCompatibilityTest {
           "org.apache.spark.sql.catalyst.plans.logical.AppendColumns",
           "org.apache.spark.sql.catalyst.plans.logical.AppendColumnsWithObject",
           "org.apache.spark.sql.catalyst.plans.logical.MapGroups",
+          "org.apache.spark.sql.catalyst.plans.logical.FlatMapGroupsWithState",
           "org.apache.spark.sql.catalyst.plans.logical.CoGroup");
 
   /** UDF expressions that UDF lineage classification dispatches on. */

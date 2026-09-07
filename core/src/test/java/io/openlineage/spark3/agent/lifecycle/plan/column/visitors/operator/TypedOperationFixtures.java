@@ -29,9 +29,13 @@ public final class TypedOperationFixtures {
 
   public static final String NAME_1 = "name1";
   public static final String NAME_2 = "name2";
+  public static final String NAME_3 = "name3";
+  public static final String NAME_4 = "name4";
 
   public static final ExprId EXPR_ID_1 = ExprId.apply(21);
   public static final ExprId EXPR_ID_2 = ExprId.apply(22);
+  public static final ExprId EXPR_ID_3 = ExprId.apply(23);
+  public static final ExprId EXPR_ID_4 = ExprId.apply(24);
 
   private TypedOperationFixtures() {}
 

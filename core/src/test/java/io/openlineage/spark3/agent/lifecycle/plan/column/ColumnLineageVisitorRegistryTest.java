@@ -22,12 +22,18 @@ import org.junit.jupiter.api.Test;
  * <ul>
  *   <li>{@code TypedFilterVisitor} on {@code TypedFilter}, unflagged — the deserializer names real
  *       attributes, so {@code INDIRECT/FILTER} is provable (over-broad, never a false pairing).
- *   <li>{@code TypedGroupByVisitor} on {@code MapGroups}, unflagged, same reasoning for {@code
- *       INDIRECT/GROUP_BY}.
+ *   <li>{@code TypedGroupByVisitor} on {@code MapGroups}, {@code FlatMapGroupsWithState}, and
+ *       {@code TransformWithState} (reflectively, Spark 4+), unflagged, same reasoning for
+ *       {@code INDIRECT/GROUP_BY}.
  *   <li>{@code TypedBoundaryFanInVisitor} on {@code SerializeFromObject} only, gated behind {@code
  *       typedBoundaryFanInEnabled} which ships {@code false}. It is scoped at the boundary rather
  *       than per typed node because the defect is precisely output-attr → leaf-attr across
  *       Serialize/Deserialize. See {@code docs/design/typed-boundary-emission-policy.md}.
+ *   <li>{@code PandasOperatorVisitor} on {@code MapInPandas}, {@code MapInArrow}, {@code
+ *       FlatMapGroupsInPandas}, {@code FlatMapGroupsInArrow}, unflagged — the fan-in claim is
+ *       exact (Spark marshals exactly the UDF's argument columns, not a pessimistic fan-in across
+ *       an opaque object boundary), so it ships on the {@code TypedGroupByVisitor} side of the
+ *       policy line. The grouping signal on the two FlatMapGroups nodes is provable.
  * </ul>
  */
 class ColumnLineageVisitorRegistryTest {
@@ -65,7 +71,8 @@ class ColumnLineageVisitorRegistryTest {
             "UnionVisitor",
             "IcebergMergeIntoVisitor",
             "TypedBoundaryFanInVisitor",
-            "TypedGroupByVisitor");
+            "TypedGroupByVisitor",
+            "PandasOperatorVisitor");
   }
 
   @Test

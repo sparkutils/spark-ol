@@ -1,8 +1,9 @@
 # Column lineage across the typed Dataset boundary
 
 Design record for column-level lineage on typed Dataset operations —
-`map`, `mapPartitions`, `flatMap`, `filter(T => Boolean)` and
-`groupByKey().mapGroups`. Covers what the plan actually exposes, why the
+`map`, `mapPartitions`, `flatMap`, `filter(T => Boolean)`,
+`groupByKey().mapGroups` and `groupByKey().mapGroupsWithState` /
+`flatMapGroupsWithState`. Covers what the plan actually exposes, why the
 pessimistic fan-in is the chosen emission policy for the opaque boundary, and
 the two narrower signals that ship unflagged alongside it.
 
@@ -145,14 +146,18 @@ per typed node, because the defect is precisely output-attr → leaf-attr across
 
 - `isDefinedAt` matches `SerializeFromObject` only. From there it walks down
   through the opaque object operators (`MapElements`, `MapPartitions`,
-  `MapGroups`, `AppendColumns`) and stops at `DeserializeToObject`, the only
-  node whose expressions reference real attributes of the relation below.
-  Stopping there leaves a nested typed hop to its own `SerializeFromObject`
-  rather than absorbing it.
+  `MapGroups`, `FlatMapGroupsWithState`, `AppendColumns`) and stops at
+  `DeserializeToObject`, the only node whose expressions reference real
+  attributes of the relation below. Stopping there leaves a nested typed hop
+  to its own `SerializeFromObject` rather than absorbing it. Any other node
+  in between — an untyped `Filter`/`Project` from `ds.map(...).filter(...)` or
+  `ds.filter(...).map(...)`, or an `AppendColumnsWithObject` below a grouping —
+  is a pass-through for lineage: the walk descends through it rather than
+  stopping, so the `DeserializeToObject` below is still reached.
 - Inputs come from `deserializer().references()` (plus `keyDeserializer()` and
-  `valueDeserializer()` on `MapGroups`, and `AppendColumns.deserializer()`).
-  Outputs are `SerializeFromObject.output()` — usable only as attributes to
-  attach edges *to*, per the asymmetry above.
+  `valueDeserializer()` on `MapGroups` and `FlatMapGroupsWithState`, and
+  `AppendColumns.deserializer()`). Outputs are `SerializeFromObject.output()` —
+  usable only as attributes to attach edges *to*, per the asymmetry above.
 - Every output × every input is emitted as `INDIRECT`/`TRANSFORMATION`,
   description `typed operation: <nodes>`, `masking=false`.
   `TransformationInfo.merge` lets the indirect edge win over the
@@ -168,6 +173,45 @@ readable from there.
 
 `CoGroup` is deliberately not handled: two grouping sides, no `AppendColumns` of
 the shape these visitors resolve.
+
+### Naming both sides of the hop: A and B
+
+The fan-in description names the types that crossed the boundary, recovered from
+the plan rather than the lambda's bytecode:
+
+| node | input type(s) A | output type B |
+|---|---|---|
+| `MapElements` | `argumentClass()` | `outputObjAttr()` |
+| `MapPartitions` | — (iterator element type not exposed) | `outputObjAttr()` |
+| `MapGroups` | `keyDeserializer().dataType()`, `valueDeserializer().dataType()` | `outputObjAttr()` |
+| `FlatMapGroupsWithState` | `keyDeserializer().dataType()`, `valueDeserializer().dataType()` | `outputObjAttr()` |
+
+For a bean/case class the deserializer's `dataType()` is an `ObjectType` whose
+`cls()` is the class; for a primitive key it is the primitive type. The output
+class is read from `outputObjAttr().dataType()` the same way. A side that cannot
+be read (an unresolved deserializer, which throws on `dataType()`) is dropped
+rather than failing the whole boundary. Measured on Spark 4.0.0:
+`groupByKey(row -> row.getInt(0) % 2).mapGroups((k, rows) -> k)` renders
+`MapGroups((Integer, Row) -> Integer), AppendColumns`.
+
+### The same-type flag: the one always-correct structural signal
+
+`MapElements` is the only typed node with a single `argumentClass()` /
+`outputObjAttr()` pair, so it is the only one that can carry a same-type flag.
+When `argumentClass().equals(outputObjAttr().cls())` the description gains a
+`, sameType` suffix — `MapElements(Row -> Row), sameType` vs
+`MapElements(Row -> String)`. This is a plain class comparison, not a field
+mapping, so it is always correct: it tells a consumer whether the hop is a
+field-level transform (same type in and out) or a reshape/type change, without
+claiming which field became which. It is the one signal on the boundary that
+cannot be wrong the way a name-matched pairing (option 3) can, and it is
+emitted unconditionally — it needs no flag because it never over-claims.
+
+`MapPartitions` cannot carry it: its `func()` is
+`Function1<Iterator<Object>, Iterator<Object>>` with the element type erased to
+`Object`, and it exposes no `argumentClass()`. The grouping nodes are
+`(K, V) -> B` reshapes by construction, so a same-type flag would be meaningless
+there.
 
 ## `TypedFilter` → INDIRECT/FILTER, unflagged
 
@@ -225,14 +269,17 @@ drop the filter signal on exactly the wide tables where it is most useful. The
 width behaviour is pinned by test instead, so a future cap decision is a visible
 diff.
 
-## `MapGroups` → INDIRECT/GROUP_BY, unflagged
+## `MapGroups` / `FlatMapGroupsWithState` → INDIRECT/GROUP_BY, unflagged
 
 Same reasoning as `TypedFilter` — that a grouping happened, and that it consumed
 the columns the key deserializer materialised, are both structurally provable
 from the plan, exactly as for `AggregateVisitor` on the untyped path. Gating a
 faithful signal behind the flag that exists to contain an unfaithful one would
 leave typed groupings invisible to everyone who has not opted into an unrelated
-pessimistic behaviour.
+pessimistic behaviour. `FlatMapGroupsWithState` (from `mapGroupsWithState` /
+`flatMapGroupsWithState`) is matched by the same visitor; it is a `BinaryNode`
+whose `left` is the data child and `right` the (streaming-only) initial-state
+relation, and only the data child is traversed.
 
 ### The grouping key must be resolved through `AppendColumns`
 
@@ -259,6 +306,14 @@ So `TypedGroupByVisitor` matches each grouping attribute back to the
 node's `deserializer()`. Matching on exprId rather than name or position is what
 makes the descent safe — a nested typed grouping deeper in the plan has
 different exprIds.
+
+When a preceding typed map made the intermediate object-typed, the append node
+is `AppendColumnsWithObject` instead of `AppendColumns`. It is a sibling, not a
+subclass: it has no `deserializer()`/`newColumns()`, and its
+`childSerializer()`/`newColumnsSerializer()` are rooted at the opaque object
+(`references() == []`). The real column references live on the grouping
+operator's `valueDeserializer()` (measured: `{a#26, b#27, s#28}`), so the
+visitor falls back to that when the key was appended by the object variant.
 
 Breadth is the deserialized schema, not the key lambda's reads, for the same
 reason as `TypedFilter`: for `groupByKey(row -> row.getInt(0) % 2)` over
@@ -337,13 +392,15 @@ Two mechanisms worth recording, both of which defeat the obvious test shape:
 ## Registry and cross-version
 
 Three typed visitors, disjoint by plan node — `SerializeFromObject`,
-`TypedFilter`, `MapGroups` — which is what lets them coexist without
-double-claiming one. `DeserializeToObject` and `SerializeFromObject` need no
-visitors of their own; they are the boundary the others read across. The
-registry is pinned in one place, `ColumnLineageVisitorRegistryTest`.
+`TypedFilter`, `MapGroups` / `FlatMapGroupsWithState` — which is what lets them
+coexist without double-claiming one. `DeserializeToObject` and
+`SerializeFromObject` need no visitors of their own; they are the boundary the
+others read across. The registry is pinned in one place,
+`ColumnLineageVisitorRegistryTest`.
 
 `javap` on catalyst 3.5.0, 4.0.0 and 4.1.0: `DeserializeToObject`,
 `SerializeFromObject`, `MapElements`, `MapPartitions`, `MapGroups`,
-`AppendColumns` and `TypedFilter` expose identical accessors in all three, so no
-shim is needed. Built and tested green under `Spark4`/`scala_2.13.16` and
-`Spark41`/`scala_2.13.18`; `Spark350` builds `api` only.
+`FlatMapGroupsWithState`, `AppendColumns` and `TypedFilter` expose identical
+accessors in all three, so no shim is needed. Built and tested green under
+`Spark4`/`scala_2.13.16` and `Spark41`/`scala_2.13.18`; `Spark350` builds `api`
+only.

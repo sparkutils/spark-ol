@@ -1,0 +1,12 @@
+{
+  "run_name": "spark-ol-pandas-e2e",
+  "tasks": [
+    {
+      "task_key": "pandas_e2e",
+      "existing_cluster_id": "0905-080408-2mdoaht3",
+      "notebook_task": {
+        "notebook_path": "/Users/ievgenii.korniichuk@ubsclouddisconnected.onmicrosoft.com/openlineage_demo/notebook_pandas_validation"
+      }
+    }
+  ]
+}

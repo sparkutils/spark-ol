@@ -251,6 +251,16 @@ abstract class TypedLineageTestBase {
     return edges(plan, attributeNames(plan), typedBoundaryFanInConfig(maxEdges), false);
   }
 
+  /**
+   * As {@link #edgesWithTypedBoundaryFanIn(Dataset, Integer)}, but also renders the transformation
+   * description, so the typed-boundary type names ({@code MapElements(A -> B)}, {@code
+   * MapGroups((K, V) -> B)}) are observable.
+   */
+  protected List<String> describedEdgesWithTypedBoundaryFanIn(Dataset<?> ds, Integer maxEdges) {
+    LogicalPlan plan = ds.queryExecution().optimizedPlan();
+    return edges(plan, attributeNames(plan), typedBoundaryFanInConfig(maxEdges), true);
+  }
+
   protected List<String> edges(
       LogicalPlan plan,
       Map<Long, String> names,
