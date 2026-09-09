@@ -307,7 +307,7 @@
     </profiles>
 
     <properties>
-        <revision>0.0.5-RC29</revision>
+        <revision>0.0.6-RC1</revision>
 
         <mavenFlattenPluginVersion>1.2.7</mavenFlattenPluginVersion>
         <mavenProjectInfoReportsPluginVersion>3.4.5</mavenProjectInfoReportsPluginVersion>
