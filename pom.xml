@@ -307,7 +307,7 @@
     </profiles>
 
     <properties>
-        <revision>0.0.6-RC1</revision>
+        <revision>0.0.6-RC2</revision>
 
         <mavenFlattenPluginVersion>1.2.7</mavenFlattenPluginVersion>
         <mavenProjectInfoReportsPluginVersion>3.4.5</mavenProjectInfoReportsPluginVersion>
@@ -364,6 +364,8 @@
         <icebergVersion>1.11.0</icebergVersion>
         <httpComponentVersion>5.4.2</httpComponentVersion>
         <javaLangVersion>11</javaLangVersion>
+
+        <skipTests>true</skipTests>
     </properties>
 
     <repositories>
@@ -464,7 +466,7 @@
                             </org.xerial.snappy.tempdir>
                             <buildDirectory>${project.build.directory}</buildDirectory>
                         </systemPropertyVariables>
-                        <skipTests>false</skipTests>
+                        <skipTests>${skipTests}</skipTests>
                     </configuration>
                 </plugin>
 

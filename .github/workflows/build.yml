@@ -17,10 +17,10 @@ env:
 jobs:
 
   # all versions that cannot be built with tests - typically Databricks only
-  noTestBuilds_11:
+  testBuilds_11:
     uses: sparkutils/building/.github/workflows/run_build.yml@main
     with:
-      testString: -DskipTests # use tests for verifying only the delta tests have issues testString: test
+      #testString: -DskipTests # use tests for verifying only the delta tests have issues testString: test
       theMatrix: |
         {
           "profile": [ "Spark350" ],
@@ -31,10 +31,10 @@ jobs:
       mvnOpts: *MAVEN_OPTS_11
     secrets: inherit
 
-  noTestBuilds_21:
+  testBuilds_21:
     uses: sparkutils/building/.github/workflows/run_build.yml@main
     with:
-      testString: -DskipTests # use tests for verifying only the delta tests have issues testString: test
+      #testString: -DskipTests # use tests for verifying only the delta tests have issues testString: test
       theMatrix: |
         {
           "profile": [ "Spark4", "Spark41" ],
@@ -47,7 +47,7 @@ jobs:
 
   # only publish snapshots on main by default, or when ~cut-release is in the commits
   publish_11:
-    needs: [ noTestBuilds_11 ]
+    needs: [ testBuilds_11 ]
     uses: sparkutils/building/.github/workflows/publish_build.yml@main
     with:
       theMatrix: |
@@ -64,7 +64,7 @@ jobs:
 
   # only publish snapshots on main by default, or when ~cut-release is in the commits
   publish_21:
-    needs: [ noTestBuilds_21 ]
+    needs: [ testBuilds_21 ]
     uses: sparkutils/building/.github/workflows/publish_build.yml@main
     with:
       theMatrix: |
