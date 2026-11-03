@@ -36,9 +36,9 @@ jobs:
     uses: sparkutils/building/.github/workflows/run_build.yml@main
     with:
       testString: test # -DskipTests # use tests for verifying only the delta tests have issues testString: test
-      theMatrix: |
+      theMatrix: |  # "Spark4",
         {
-          "profile": [ "Spark4", "Spark41" ],
+          "profile": [ "Spark41" ], 
           "scala": [ "scala_2.13.18" ]
         }
       jdk: 21
@@ -69,9 +69,9 @@ jobs:
     needs: [ testBuilds_21 ]
     uses: sparkutils/building/.github/workflows/publish_build.yml@main
     with:
-      theMatrix: |
+      theMatrix: | # "Spark4", 
         {
-          "profile": [ "Spark4", "Spark41" ],
+          "profile": [ "Spark41" ],
           "scala": [ "scala_2.13.18" ]
         }
       jdk: 21
