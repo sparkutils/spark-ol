@@ -11,9 +11,4 @@ public interface ProxyTransportControllable {
     /** Flushes all buffered events for the currently active run. */
     void emitAll();
 
-    /**
-     * Flushes all buffered events for the specified run ID.
-     * @param runId spark run id
-     * */
-    void emitAll(String runId);
 }

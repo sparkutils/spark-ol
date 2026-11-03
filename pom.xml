@@ -510,6 +510,7 @@
                         </archive>
                         <includes>
                             <include>com/sparkutils/**</include>
+                            <include>org/apache/spark/sql/connect/service/OLConnectUtils*.class</include>
                             <include>io/openlineage/**</include>
                         </includes>
                         <excludes>

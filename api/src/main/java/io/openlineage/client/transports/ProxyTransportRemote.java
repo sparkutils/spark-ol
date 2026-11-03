@@ -36,12 +36,4 @@ public class ProxyTransportRemote {
         }
     }
 
-    /** Flushes all buffered events for the given run ID. */
-    public static void emitAll(String runId) {
-        ProxyTransportControllable c = getControllable();
-        if (c != null) {
-            c.emitAll(runId);
-        }
-    }
-
 }
