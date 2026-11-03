@@ -365,7 +365,6 @@
         <httpComponentVersion>5.4.2</httpComponentVersion>
         <javaLangVersion>11</javaLangVersion>
 
-        <skipTests>true</skipTests>
     </properties>
 
     <repositories>
@@ -466,7 +465,6 @@
                             </org.xerial.snappy.tempdir>
                             <buildDirectory>${project.build.directory}</buildDirectory>
                         </systemPropertyVariables>
-                        <skipTests>${skipTests}</skipTests>
                     </configuration>
                 </plugin>
 
